@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Save the Date — Kathrin & Philipp</title>
+<style>
+  @font-face {
+    font-family: 'Cormorant';
+    src: local('Cormorant Garamond');
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #37493a;
+  }
+  #stage {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  /* --- Poster (Standbild) --- */
+  #poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    z-index: 3;
+    transition: opacity 0.5s ease;
+  }
+  #poster::after { content: ""; }
+  #hint {
+    position: absolute;
+    left: 50%;
+    bottom: 6%;
+    transform: translateX(-50%);
+    z-index: 4;
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 15px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    opacity: 0.9;
+    animation: pulse 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+
+  /* --- Video --- */
+  #video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  #video.visible { opacity: 1; z-index: 5; }
+
+  /* --- Finale Save-the-Date Seite --- */
+  #finale {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #3c5140;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 1s ease;
+    padding: 4vh 6vw 4vh;
+  }
+  #finale.visible { opacity: 1; z-index: 6; pointer-events: auto; }
+
+  .big-word {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    line-height: 1;
+    color: #9db296;
+    width: 100%;
+    white-space: nowrap;
+    font-size: min(19vw, 15vh);
+  }
+  #word-save { padding-left: 0.28em; }
+  #word-the {
+    font-size: min(15vw, 12vh);
+    color: #9db296;
+  }
+  #word-date {
+    font-size: min(19vw, 15vh);
+    padding-left: 0.28em;
+  }
+
+  .info {
+    font-family: 'Futura', 'Century Gothic', 'Poppins', Arial, sans-serif;
+    color: #f2ecdf;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    line-height: 2.1;
+    font-size: min(4.2vw, 3.4vh);
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <img id="poster" src="assets/poster.jpg" alt="Video Standbild – zum Abspielen tippen">
+  <div id="hint">Zum Abspielen berühren</div>
+
+  <video id="video" src="assets/video.mp4" playsinline preload="auto"></video>
+
+  <div id="finale">
+    <div class="block" style="flex:0.9;">
+      <div class="big-word" id="word-save">SAVE</div>
+    </div>
+    <div class="block" style="flex:0.6;">
+      <div class="info">Für die Hochzeit von<br>Kathrin &amp; Philipp</div>
+    </div>
+    <div class="block" style="flex:1.1;">
+      <div class="big-word" id="word-the">THE</div>
+    </div>
+    <div class="block" style="flex:0.6;">
+      <div class="info">Samstag, 25. September 2027<br>Weitere Infos folgen</div>
+    </div>
+    <div class="block" style="flex:0.9;">
+      <div class="big-word" id="word-date">DATE</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const poster = document.getElementById('poster');
+  const hint = document.getElementById('hint');
+  const video = document.getElementById('video');
+  const finale = document.getElementById('finale');
+  let started = false;
+
+  function startVideo() {
+    if (started) return;
+    started = true;
+    poster.style.opacity = '0';
+    hint.style.opacity = '0';
+    video.classList.add('visible');
+    video.currentTime = 0;
+    video.play().catch(() => {});
+  }
+
+  document.getElementById('stage').addEventListener('click', startVideo);
+  document.getElementById('stage').addEventListener('touchend', function(e){
+    e.preventDefault();
+    startVideo();
+  }, { passive: false });
+
+  video.addEventListener('ended', function () {
+    finale.classList.add('visible');
+  });
+</script>
+
+</body>
+</html>
