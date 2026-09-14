@@ -52,6 +52,11 @@
     opacity: 0.9;
     animation: pulse 2s ease-in-out infinite;
     pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  #hint.hidden {
+    animation: none;
+    opacity: 0 !important;
   }
   @keyframes pulse {
     0%, 100% { opacity: 0.55; }
@@ -70,6 +75,7 @@
     transition: opacity 0.4s ease;
   }
   #video.visible { opacity: 1; z-index: 5; }
+  #video.fading-out { opacity: 0; transition: opacity 2.2s ease-in-out; }
 
   /* --- Finale Save-the-Date Seite --- */
   #finale {
@@ -86,7 +92,7 @@
     opacity: 0;
     pointer-events: none;
     z-index: 1;
-    transition: opacity 1s ease;
+    transition: opacity 2.2s ease-in-out;
     padding: 4vh 6vw 4vh;
   }
   #finale.visible { opacity: 1; z-index: 6; pointer-events: auto; }
@@ -167,7 +173,7 @@
     if (started) return;
     started = true;
     poster.style.opacity = '0';
-    hint.style.opacity = '0';
+    hint.classList.add('hidden');
     video.classList.add('visible');
     video.currentTime = 0;
     video.play().catch(() => {});
@@ -181,6 +187,7 @@
 
   video.addEventListener('ended', function () {
     finale.classList.add('visible');
+    video.classList.add('fading-out');
   });
 </script>
 
