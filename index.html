@@ -25,6 +25,19 @@
     overflow: hidden;
   }
 
+  /* Desktop: play the video/finale in a centered half-width column instead of full-bleed */
+  @media (min-width: 900px) {
+    #stage {
+      left: 50%;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 50vw;
+      transform: translateX(-50%);
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.45);
+    }
+  }
+
   /* --- Poster (Standbild) --- */
   #poster {
     position: absolute;
