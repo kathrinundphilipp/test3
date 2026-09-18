@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Save the Date — Kathrin & Philipp</title>
 <style>
-  @font-face {
-    font-family: 'Cormorant';
-    src: local('Cormorant Garamond');
-  }
+  @font-face { font-family: "Luxurious Script"; src: url(assets/fonts/luxurious-script-latin.woff2) format("woff2"); font-display: swap; }
+  @font-face { font-family: "Jost"; src: url(assets/fonts/jost-latin.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Roboto Serif Cond"; src: url(assets/fonts/roboto-serif-cond-700-latin.woff2) format("woff2"); font-weight: 700; font-display: swap; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     height: 100%;
@@ -90,66 +89,80 @@
   #video.visible { opacity: 1; z-index: 5; }
   #video.fading-out { opacity: 0; transition: opacity 2.2s ease-in-out; }
 
-  /* --- Finale Save-the-Date Seite --- */
+  /* --- Finale Save-the-Date Seite (Design-Raster 1080 x 1920, skaliert) --- */
   #finale {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    background: #3c5140;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
+    background: #ece9e2;
+    container-type: size;
+    --u: min(calc(100cqw / 1080), calc(100cqh / 1920));
     opacity: 0;
     pointer-events: none;
     z-index: 1;
     transition: opacity 2.2s ease-in-out;
-    padding: 0 6vw;
+    overflow: hidden;
   }
   #finale.visible { opacity: 1; z-index: 6; pointer-events: auto; }
 
-  .big-word {
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, 'Times New Roman', serif;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-    line-height: 1;
-    color: #9db296;
+  .canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(1080 * var(--u));
+    height: calc(1920 * var(--u));
+    transform: translate(-50%, -50%);
+  }
+
+  .t {
+    position: absolute;
+    left: 0;
     width: 100%;
+    text-align: center;
     white-space: nowrap;
-    font-size: min(19vw, 15vh);
-    text-shadow: 0 18px 36px rgba(0, 0, 0, 0.4);
-  }
-  #word-save { padding-left: 0.28em; }
-  #word-the {
-    font-size: min(15vw, 12vh);
-    color: #9db296;
-  }
-  #word-date {
-    font-size: min(19vw, 15vh);
-    padding-left: 0.28em;
-  }
-
-  .info {
-    font-family: 'Futura', 'Century Gothic', 'Poppins', Arial, sans-serif;
-    color: #f2ecdf;
+    line-height: 1;
+    transform: translateY(-50%);
+    color: #2e2e2e;
+    font-family: "Jost", "Century Gothic", Arial, sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.28em;
-    line-height: 2.1;
-    font-size: min(4.2vw, 3.4vh);
   }
-  .info .highlight {
-    color: #c9a24b;
+  #t-wir  { top: calc(470 * var(--u)); font-size: calc(36 * var(--u)); letter-spacing: 0.1em; }
+  #t-date { top: calc(555 * var(--u)); font-size: calc(86 * var(--u)); letter-spacing: 0; transform: translateY(-50%) scaleX(0.84);
+            font-family: "Roboto Serif Cond", Georgia, "Times New Roman", serif; font-weight: 700; }
+  #t-names { top: calc(655 * var(--u)); font-size: calc(38 * var(--u)); letter-spacing: 0.06em; }
+  #t-info { top: calc(1867 * var(--u)); font-size: calc(34 * var(--u)); letter-spacing: 0.08em; }
+
+  .heart {
+    position: absolute;
+    left: calc(445 * var(--u));
+    top: calc(105 * var(--u));
+    width: calc(190 * var(--u));
+    height: calc(240 * var(--u));
+    overflow: visible;
+    filter:
+      drop-shadow(calc(var(--u) * -2) calc(var(--u) * -2) calc(var(--u) * 1.5) rgba(255, 255, 255, 0.95))
+      drop-shadow(calc(var(--u) * 3) calc(var(--u) * 4) calc(var(--u) * 4) rgba(110, 104, 92, 0.35));
   }
 
-  .block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+  .script {
+    position: absolute;
+    white-space: nowrap;
+    line-height: 1;
+    font-family: "Luxurious Script", "Snell Roundhand", cursive;
+    font-size: calc(600 * var(--u));
+    transform-origin: 0 0;
+    transform: scaleX(1.16);
+    color: #f2f0eb;
+    text-shadow:
+      calc(var(--u) * -3) calc(var(--u) * -3) calc(var(--u) * 3) rgba(255, 255, 255, 0.95),
+      calc(var(--u) * 4) calc(var(--u) * 5) calc(var(--u) * 6) rgba(110, 104, 92, 0.38),
+      calc(var(--u) * 8) calc(var(--u) * 12) calc(var(--u) * 18) rgba(110, 104, 92, 0.12);
   }
+  #s-save { left: calc(0 * var(--u)); top: calc(665 * var(--u)); }
+  #s-the  { left: calc(595 * var(--u)); top: calc(950 * var(--u)); }
+  #s-date { left: calc(20 * var(--u)); top: calc(1255 * var(--u)); transform: scaleX(1.3); }
 </style>
 </head>
 <body>
@@ -161,20 +174,17 @@
   <video id="video" src="assets/video.mp4" playsinline preload="auto"></video>
 
   <div id="finale">
-    <div class="block" style="flex:0.9;">
-      <div class="big-word" id="word-save">SAVE</div>
-    </div>
-    <div class="block" style="flex:0.6;">
-      <div class="info">Für die Hochzeit von<br><span class="highlight">Kathrin &amp; Philipp</span></div>
-    </div>
-    <div class="block" style="flex:1.1;">
-      <div class="big-word" id="word-the">THE</div>
-    </div>
-    <div class="block" style="flex:0.6;">
-      <div class="info">Samstag, 25. September 2027<br>Weitere Infos folgen</div>
-    </div>
-    <div class="block" style="flex:0.9;">
-      <div class="big-word" id="word-date">DATE</div>
+    <div class="canvas">
+      <svg class="heart" viewBox="0 0 200 250" fill="none" stroke="#f2f0eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M100 240 C62 192 10 142 8 82 C6 36 62 18 86 56 C93 67 97 80 99 96 C107 62 132 26 166 13 C192 4 196 42 186 76 C171 132 132 190 100 240 Z"/>
+      </svg>
+      <div class="t" id="t-wir">Wir heiraten!</div>
+      <div class="t" id="t-date">25. September 2027</div>
+      <div class="t" id="t-names">Kathrin &amp; Philipp</div>
+      <div class="script" id="s-save">Save</div>
+      <div class="script" id="s-the">the</div>
+      <div class="script" id="s-date">date</div>
+      <div class="t" id="t-info">Weitere Infos folgen</div>
     </div>
   </div>
 </div>
